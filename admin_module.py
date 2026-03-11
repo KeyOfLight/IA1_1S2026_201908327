@@ -9,10 +9,11 @@ class AdminModule:
     def __init__(self, window):
         self.window = window
         self.window.title("Módulo Administrativo")
-        self.window.geometry("900x600")
+        self.window.geometry("1200x650")
         self.window.resizable(False, False)
         self.authenticated = False
         self.user_level = None
+        self.current_username = None
         
         self.configure_styles()
         self.show_login()
@@ -166,6 +167,7 @@ Administrador: usuario: admin | contraseña: admin123"""
         if result["authenticated"]:
             self.authenticated = True
             self.user_level = result["level"]
+            self.current_username = username
             self.show_admin_panel()
         else:
             messagebox.showerror("Error", "Credenciales inválidas")
@@ -190,7 +192,7 @@ Administrador: usuario: admin | contraseña: admin123"""
         
         title = tk.Label(
             header_content,
-            text=f"Panel Administrativo - Bienvenido {self.user_entry.get()}",
+            text=f"Panel Administrativo - Bienvenido {self.current_username or ''}",
             font=self.title_font,
             fg="white",
             bg="#2c3e50"
@@ -226,7 +228,7 @@ Administrador: usuario: admin | contraseña: admin123"""
         table_frame.pack(fill=tk.BOTH, expand=True, pady=10)
         
         # Crear Treeview
-        columns = ("ID", "Síntomas", "Diagnósticos", "Fecha")
+        columns = ("ID", "Síntomas", "Crónicas", "Alergias", "Diagnósticos", "Fecha")
         self.tree = ttk.Treeview(
             table_frame,
             columns=columns,
@@ -237,12 +239,16 @@ Administrador: usuario: admin | contraseña: admin123"""
         # Definir encabezados
         self.tree.heading("ID", text="ID")
         self.tree.heading("Síntomas", text="Síntomas Reportados")
+        self.tree.heading("Crónicas", text="Enfermedades Crónicas")
+        self.tree.heading("Alergias", text="Alergias")
         self.tree.heading("Diagnósticos", text="Diagnósticos Preliminares")
         self.tree.heading("Fecha", text="Fecha")
         
         self.tree.column("ID", width=40)
-        self.tree.column("Síntomas", width=250)
-        self.tree.column("Diagnósticos", width=300)
+        self.tree.column("Síntomas", width=190)
+        self.tree.column("Crónicas", width=180)
+        self.tree.column("Alergias", width=180)
+        self.tree.column("Diagnósticos", width=280)
         self.tree.column("Fecha", width=150)
         
         # Scrollbar
@@ -320,7 +326,7 @@ Administrador: usuario: admin | contraseña: admin123"""
             )
         
         if not diagnoses:
-            self.tree.insert("", tk.END, values=("", "No hay registros", "", ""))
+            self.tree.insert("", tk.END, values=("", "No hay registros", "", "", "", ""))
     
     def delete_selected(self):
         """Elimina el diagnóstico seleccionado (solo para admin)"""
@@ -343,6 +349,6 @@ Administrador: usuario: admin | contraseña: admin123"""
         """Cierra sesión y regresa al login"""
         if messagebox.askyesno("Confirmar", "¿Desea cerrar sesión?"):
             self.authenticated = False
-            self.user_entry.delete(0, tk.END)
-            self.pass_entry.delete(0, tk.END)
+            self.user_level = None
+            self.current_username = None
             self.show_login()
