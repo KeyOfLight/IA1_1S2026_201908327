@@ -1,0 +1,160 @@
+{
+  "timestamp": "2026-02-27T22:30:02.351686",
+  "titulo": "Demostración de Consultas Prolog - MediLogic",
+  "consultas": [
+    {
+      "numero": 1,
+      "nombre": "Obtener síntomas disponibles",
+      "prolog": "todos_sintomas(S)",
+      "resultado": [
+        "Congestion Nasal",
+        "Diarrea",
+        "Dolor Abdominal",
+        "Dolor Cabeza",
+        "Dolor Garganta",
+        "Fatiga",
+        "Fiebre",
+        "Mareos",
+        "Nauseas",
+        "Tos"
+      ],
+      "exito": true
+    },
+    {
+      "numero": 2,
+      "nombre": "Diagnóstico con Fiebre",
+      "prolog": "diagnosticos_ordenados([fiebre], D)",
+      "sintomas": [
+        "Fiebre"
+      ],
+      "resultado": [
+        [
+          "Gripe",
+          1
+        ],
+        [
+          "Covid 19",
+          1
+        ],
+        [
+          "Neumonia",
+          1
+        ]
+      ],
+      "exito": true
+    },
+    {
+      "numero": 3,
+      "nombre": "Diagnóstico múltiple",
+      "prolog": "diagnosticos_ordenados([fiebre, tos, dolor_cabeza], D)",
+      "sintomas": [
+        "Fiebre",
+        "Tos",
+        "Dolor de cabeza"
+      ],
+      "resultado": [
+        [
+          "Gripe",
+          2
+        ],
+        [
+          "Resfriado",
+          1
+        ],
+        [
+          "Covid 19",
+          1
+        ],
+        [
+          "Neumonia",
+          1
+        ],
+        [
+          "Bronquitis",
+          1
+        ],
+        [
+          "Asma",
+          1
+        ]
+      ],
+      "exito": true
+    },
+    {
+      "numero": 4,
+      "nombre": "Verificar urgencias",
+      "prolog": "es_urgente(Condicion)",
+      "resultado": {
+        "Apendicitis": true,
+        "Neumonía": false,
+        "Gripe": false,
+        "Resfriado": false
+      },
+      "exito": true
+    },
+    {
+      "numero": 5,
+      "nombre": "Obtener recomendaciones",
+      "prolog": "obtener_recomendacion(Condicion, R)",
+      "resultado": {
+        "Gripe": "Consulte con un profesional médico para más información.",
+        "Apendicitis": "Consulte con un profesional médico para más información.",
+        "Gastroenteritis": "Consulte con un profesional médico para más información."
+      },
+      "exito": true
+    },
+    {
+      "numero": 6,
+      "nombre": "Flujo completo",
+      "sintomas": [
+        "Fiebre",
+        "Nauseas",
+        "Dolor Abdominal"
+      ],
+      "diagnosticos": [
+        [
+          "Gripe",
+          1
+        ],
+        [
+          "Gastroenteritis",
+          1
+        ],
+        [
+          "Gastritis",
+          1
+        ],
+        [
+          "Apendicitis",
+          1
+        ],
+        [
+          "Colicos",
+          1
+        ],
+        [
+          "Ulcera",
+          1
+        ],
+        [
+          "Covid 19",
+          1
+        ],
+        [
+          "Neumonia",
+          1
+        ],
+        [
+          "Intoxicacion",
+          1
+        ]
+      ],
+      "exito": true
+    }
+  ],
+  "resumen": {
+    "total_consultas": 6,
+    "consultas_exitosas": 6,
+    "tasa_exito": "100.0%"
+  }
+}
